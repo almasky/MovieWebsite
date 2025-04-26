@@ -1,36 +1,69 @@
 package org.example.movie.repository;
 
 import org.example.movie.entity.Watchlist;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class WatchlistRepository {
 
-    private final Map<String, Watchlist> watchlists = new HashMap<>();
+    private SessionFactory sessionFactory;
+
+    public WatchlistRepository() {
+        sessionFactory = new Configuration().configure().buildSessionFactory();
+    }
 
     public void save(Watchlist watchlist) {
-        if (watchlist == null || watchlist.getWatchlistId() == null) {
-            throw new IllegalArgumentException("Watchlist or Watchlist ID cannot be null.");
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            session.save(watchlist);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
         }
-        watchlists.put(watchlist.getWatchlistId(), watchlist);
     }
 
-    public Watchlist findById(String watchlistId) {
-        if (watchlistId == null) {
-            throw new IllegalArgumentException("Watchlist ID cannot be null.");
+    public Watchlist findById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Watchlist.class, id);
         }
-        return watchlists.get(watchlistId);
     }
 
-    public void delete(String watchlistId) {
-        if (watchlistId == null) {
-            throw new IllegalArgumentException("Watchlist ID cannot be null.");
+    public List<Watchlist> findAll() {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("FROM Watchlist", Watchlist.class).list();
         }
-        watchlists.remove(watchlistId);
     }
 
-    public Map<String, Watchlist> findAll() {
-        return new HashMap<>(watchlists);
+    public void update(Watchlist watchlist) {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            session.update(watchlist);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteById(Long id) {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            Watchlist watchlist = session.get(Watchlist.class, id);
+            if (watchlist != null) {
+                session.delete(watchlist);
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        }
     }
 }

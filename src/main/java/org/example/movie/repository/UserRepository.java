@@ -1,4 +1,9 @@
 package org.example.movie.repository;
 
-public interface UserRepository {
+import org.example.movie.entity.UserMovie;
+
+public class UserRepository {
+    public UserMovie findById(Long userId) {
+        return null;
+    }
 }

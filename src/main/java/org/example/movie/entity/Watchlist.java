@@ -1,41 +1,49 @@
 package org.example.movie.entity;
 
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@Entity
+@Table(name = "watchlist")
 public class Watchlist {
 
-        private String watchlistId;
-        private String userId;
-        private Set<String> movieIds;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long watchlistId;
 
-        public Watchlist(String watchlistId, String userId) {
-            this.watchlistId = watchlistId;
-            this.userId = userId;
-            this.movieIds = new HashSet<>();
-        }
+    @ManyToOne
+    @JoinColumn(name = "user_id")  // Reference to the UserMovie entity
+    private UserMovie user;
 
-        public void addMovie(String movieId) {
-            movieIds.add(movieId);
-        }
+    @ManyToMany
+    @JoinTable(
+            name = "watchlist_movies",
+            joinColumns = @JoinColumn(name = "watchlist_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id")
+    )
+    private Set<Movie> movies = new HashSet<>();
 
-        public void removeMovie(String movieId) {
-            movieIds.remove(movieId);
-        }
-
-        public void displayWatchlist() {
-            System.out.println("Watchlist for User: " + userId);
-            if (movieIds.isEmpty()) {
-                System.out.println("No movies in watchlist.");
-            } else {
-                for (String movieId : movieIds) {
-                    System.out.println("- " + movieId);
-                }
-            }
-        }
+    public Watchlist(UserMovie user) {
+        this.user = user;
     }
 
+    public void addMovie(Movie movie) {
+        this.movies.add(movie);
+    }
 
+    public void removeMovie(Movie movie) {
+        this.movies.remove(movie);
+    }
+
+    public Set<Movie> getMovies() {
+        return movies;
+    }
+}

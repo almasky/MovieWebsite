@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,6 +29,9 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Genre genre;
+
+    @ManyToMany(mappedBy = "movies")
+    private Set<Watchlist> watchlists = new HashSet<>();
 
 
     public Movie(String title, Type type, Genre genre) {
