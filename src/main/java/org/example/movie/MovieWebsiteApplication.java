@@ -24,19 +24,19 @@ public class MovieWebsiteApplication {
             System.out.println("2. Manage Content");
             System.out.println("3. Manage Users");
             System.out.println("4. Manage Watchlists");
-            System.out.println("5. Exit Application");
+                    System.out.println("5. Exit Application");
 
-            int choice = scanner.nextInt();
+                    int choice = scanner.nextInt();
 
-            switch (choice) {
-                case 1:
-                    adminController.manageAdmins();
-                    break;
-                case 2:
-                    movieController.manageMovies();
-                    break;
-                case 3:
-                    //userController
+                    switch (choice) {
+                        case 1:
+                            adminController.manageAdmins();
+                            break;
+                        case 2:
+                            movieController.manageMovies();
+                            break;
+                        case 3:
+                            userController.UserSearchBar();
                     break;
                 case 4:
                     watchlistController.manageWatchlist();

@@ -17,7 +17,7 @@ public class WatchlistService {
 
     // Create a new Watchlist for a user
     public Watchlist createWatchlist(Long userId) {
-        UserMovie user = userMovieRepository.findById(userId);
+        UserMovie user = userMovieRepository.findUserById(userId);
         if (user != null) {
             Watchlist watchlist = new Watchlist(user);
             watchlistRepository.save(watchlist);
