@@ -39,4 +39,14 @@ public class UserRepository {
             return session.get(UserMovie.class, id);
         }
     }
+    public void deleteUser(Long id) {
+        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            UserMovie u = session.get(UserMovie.class, id);
+            if (u != null) {
+                session.delete(u);
+                session.getTransaction().commit();
+            }
+        }
+    }
 }
