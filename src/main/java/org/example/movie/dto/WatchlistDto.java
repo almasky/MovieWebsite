@@ -1,15 +1,14 @@
 package org.example.movie.dto;
 
+import java.util.List;
+
 public class WatchlistDto {
-
-
-
 
         private String userId;
         private String userName;
-        private List<MovieDTO> movies;
+        private List<MovieDto> movies;
 
-        public WatchlistDTO(String userId, String userName, List<MovieDTO> movies) {
+        public WatchlistDto(String userId, String userName, List<MovieDto> movies) {
             this.userId = userId;
             this.userName = userName;
             this.movies = movies;
@@ -23,9 +22,8 @@ public class WatchlistDto {
             return userName;
         }
 
-        public List<MovieDTO> getMovies() {
+        public List<MovieDto> getMovies() {
             return movies;
         }
     }
 
-}
