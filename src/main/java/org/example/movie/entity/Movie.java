@@ -36,4 +36,5 @@ public class Movie {
     public String toString() {
         return "Movie [title=" + title + ", type=" + type + ", genre=" + genre + "]";
     }
+
 }
