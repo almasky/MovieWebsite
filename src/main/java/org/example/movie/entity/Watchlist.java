@@ -1,8 +1,11 @@
 package org.example.movie.entity;
 
+import lombok.Data;
+
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
 public class Watchlist {
 
         private String watchlistId;
