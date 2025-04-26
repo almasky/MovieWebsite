@@ -1,53 +1,43 @@
 package org.example.movie.repository;
 
-import org.example.movie.entity.AdminMovie;
 import org.example.movie.config.HibernateConfig;
+import org.example.movie.entity.AdminMovie;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import java.util.List;
 
-
-
 public class AdminRepository {
 
-    // Save an admin
-    public void saveAdmin(AdminMovie admin) {
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
-            session.save(admin);
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Retrieve all admins
+    // Method to retrieve all admins
     public List<AdminMovie> getAllAdmins() {
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
-            return session.createQuery("from AdminMovie", AdminMovie.class).list();
+            return session.createQuery("from AdminMovie", AdminMovie.class).list(); // HQL to fetch all admins
         }
     }
 
-    // Find admin by ID
+    // Other methods (saveAdmin, findAdminById, deleteAdmin)
+    public void saveAdmin(AdminMovie admin) {
+        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.save(admin);
+            session.getTransaction().commit();
+        }
+    }
+
     public AdminMovie findAdminById(Long id) {
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             return session.get(AdminMovie.class, id);
         }
     }
 
-    // Delete an admin
     public void deleteAdmin(Long id) {
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
+            session.beginTransaction();
             AdminMovie admin = session.get(AdminMovie.class, id);
             if (admin != null) {
                 session.delete(admin);
-                transaction.commit();
+                session.getTransaction().commit();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
-
 }

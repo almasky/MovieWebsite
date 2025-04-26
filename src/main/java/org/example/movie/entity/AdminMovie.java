@@ -1,38 +1,34 @@
 package org.example.movie.entity;
+
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Setter;
 
 @Data
 @Entity
-@Table(name = "users")
+@Table(name = "admins") // Correctly maps to the "admins" table
 public class AdminMovie {
 
-    public AdminMovie(Long id) {
-
-        this.id = id;
-    }
-
-    public AdminMovie() {
-    }
-    @Setter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-increment ID
     private Long id;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "admin_id")
-    private AdminMovie adminMovie;
+    // Default constructor
+    public AdminMovie() {
+    }
 
-
-
+    // Parameterized constructor
+    public AdminMovie(String email, String username, String password) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
 }

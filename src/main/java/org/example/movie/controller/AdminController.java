@@ -11,6 +11,7 @@ public class AdminController {
 
     public void manageAdmins() {
         Scanner scanner = new Scanner(System.in);
+
         while (true) {
             System.out.println("\nAdmin Management:");
             System.out.println("1. Add Admin");
@@ -31,27 +32,28 @@ public class AdminController {
                     System.out.println("Enter Admin Password:");
                     String password = scanner.nextLine();
 
-                    AdminMovie newAdmin = new AdminMovie();
-                    newAdmin.setEmail(email);
-                    newAdmin.setUsername(username);
-                    newAdmin.setPassword(password);
-
+                    AdminMovie newAdmin = new AdminMovie(email, username, password);
                     adminService.addAdmin(newAdmin);
                     System.out.println("Admin added successfully!");
                     break;
 
                 case 2:
                     System.out.println("All Admins:");
-                    adminService.getAdmins().forEach(admin ->
-                            System.out.println("ID: " + admin.getId() + ", Email: " + admin.getEmail() + ", Username: " + admin.getUsername()));
+                    adminService.getAllAdmins().forEach(admin ->
+                            System.out.println("ID: " + admin.getId() +
+                                    ", Email: " + admin.getEmail() +
+                                    ", Username: " + admin.getUsername()));
                     break;
 
                 case 3:
                     System.out.println("Enter Admin ID:");
                     Long id = scanner.nextLong();
+                    scanner.nextLine(); // Consume newline
                     AdminMovie admin = adminService.getAdminById(id);
                     if (admin != null) {
-                        System.out.println("Admin Details -> ID: " + admin.getId() + ", Email: " + admin.getEmail() + ", Username: " + admin.getUsername());
+                        System.out.println("Admin Details -> ID: " + admin.getId() +
+                                ", Email: " + admin.getEmail() +
+                                ", Username: " + admin.getUsername());
                     } else {
                         System.out.println("Admin not found!");
                     }
