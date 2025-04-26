@@ -1,10 +1,12 @@
 package org.example.movie;
 
 import org.example.movie.controller.AdminController;
+import org.example.movie.controller.MovieController;
 
 public class MovieWebsiteApplication {
     public static void main(String[] args) {
-        AdminController adminController = new AdminController();
-        adminController.manageAdmins();
+
+        MovieController movieController = new MovieController();
+        movieController.manageMovies();
     }
 }

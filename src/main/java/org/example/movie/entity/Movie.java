@@ -19,9 +19,11 @@ public class Movie {
     @Column(nullable = false)
     private String title;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Type type;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Genre genre;
 
