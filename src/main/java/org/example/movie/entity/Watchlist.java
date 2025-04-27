@@ -23,7 +23,7 @@ public class Watchlist {
     @JoinColumn(name = "user_id")  // Reference to the UserMovie entity
     private UserMovie user;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "watchlist_movies",
             joinColumns = @JoinColumn(name = "watchlist_id"),
